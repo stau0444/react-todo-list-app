@@ -3,7 +3,7 @@ import useMembers from '../../hooks/useMembers';
 import BasicPagination from '../BasicPagination';
 import TodoTable from './TodoTable';
 
-export default function MemberList() {
+export default function TodoList() {
 
     const {memberCount} = useMembers();
     

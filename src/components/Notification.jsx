@@ -1,34 +1,37 @@
 import React from "react";
+import useNotice from '../hooks/useNotice';
 import { useState } from "react";
 import { motion } from "framer-motion";
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import AddIcon from '@material-ui/icons/Add';
 
 export default function Notification({notification}) {
   const [isOpen, setIsOpen] = useState(false);
-  const removeNotice = (id) => {
-    setIsOpen(false);
-    console.log(`${id} 번 notice 삭제`);
-  };
+  const {removeNotice} = useNotice();
+  console.log(isOpen);
   return (
     <motion.div
       layout
-      data-isOpen={isOpen}
-      initial={{ borderRadius: 10 }}
-      className="parent"
+      data-isopen={isOpen}
+      initial={{ borderRadius: 20 }}
+      className="notice-parent"
       onClick={() => setIsOpen(!isOpen)}
     >
       <motion.div
         layout
-        className="child"
-        children={<div className=" button-label ">클릭</div>}
+        className="notice-child"
+        children={<div className=" button-label "><AddIcon/></div>}
       />
-      <p
-        data-isOpen={isOpen}
-        className="content"
-        style={{ width: "70%", marginLeft: "60px" }}
+      <p 
+        data-isopen={isOpen}
+        className="notice-content"
       >
         {notification.content}
       </p>
-      <button  onClick={()=>{removeNotice(notification.id);}}>1</button>
+      <button className="notice-removeBtn" onClick={()=>{removeNotice(notification.id,setIsOpen);}}>
+      <RemoveCircleOutlineIcon/>
+      </button>
+      <p className="notice-createdAt">{notification.createdAt}</p>
     </motion.div>
   );
 }

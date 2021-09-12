@@ -9,9 +9,9 @@ const activeStyle = {
 export default function Links() {
     return(
         <ul className="link-list">
-            <li><NavLink to="/" exact activeStyle={activeStyle} ><Button >HOME</Button></NavLink></li>
-            <li><NavLink to="/date" activeStyle={activeStyle}><Button>Date</Button></NavLink></li>
-            <li><NavLink to="/about" activeStyle={activeStyle}><Button>About</Button></NavLink></li>
+            <li><NavLink to="/" exact activeStyle={activeStyle} ><Button >HOME</Button></NavLink></li>|
+            <li><NavLink to="/date" activeStyle={activeStyle}><Button>Date</Button></NavLink></li>|
+            <li><NavLink to="/notice" activeStyle={activeStyle}><Button>Notice</Button></NavLink></li>
         </ul>
     );
 }

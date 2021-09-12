@@ -1,15 +1,12 @@
-import {useState,useRef,useMemo,useEffect} from 'react';
+import { useState, useRef, useMemo, useEffect, useCallback } from 'react';
 import TodoStateContext from '../contexts/TodoStateContext';
-import Notification from '../components/Notification';
 
 const TodoStateProvider = ({children})=>{
     
     /*
-        Member 관련로직
+        Todo 관련로직
     */
     
-    useMemo(()=>{console.log('h2');},[]);
-
     const [members , setMembers] = useState([
         {id:0 , name:'ugo'},
         {id:1 , name:'hwang'},
@@ -73,7 +70,8 @@ const TodoStateProvider = ({children})=>{
     /*
         Notice 관련 로직
     */
-    const noticies = [
+
+    const [notifications , setNotifications] = useState([
         {id:0,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
         {id:1,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
         {id:2,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
@@ -81,9 +79,24 @@ const TodoStateProvider = ({children})=>{
         {id:4,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
         {id:5,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
         {id:6,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
-    ];
-        
-    const [notifications , setNotifications] = useState(noticies);
+         ]
+    );
+    const [noticeId,setNoticeId] = useState(8);
+
+
+    const addNotice = useCallback((value)=>{    
+        setNotifications([...notifications,{id:noticeId,content:value,createdAt:new Date().toLocaleTimeString()}]);
+        setNoticeId(noticeId + 1);
+    },[notifications,noticeId]);
+
+    const removeNotice = useCallback((id,setIsOpen) => {
+        setIsOpen(false);
+        const remainNotice = notifications.filter(
+            notification=>notification.id !== id);
+        setNotifications(
+            [...remainNotice]
+        );
+    },[notifications]);
 
     return<TodoStateContext.Provider
             value={{
@@ -93,6 +106,8 @@ const TodoStateProvider = ({children})=>{
                 memberCount,
                 nameInput,
                 isLogin,
+                removeNotice,
+                addNotice,
                 setNotifications,
                 onModify,
                 onRemove,
