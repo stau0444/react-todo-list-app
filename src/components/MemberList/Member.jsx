@@ -1,6 +1,7 @@
 import useActions from "../../hooks/useActions";
 import useMembers from "../../hooks/useMembers";
 import { useRef } from 'react';
+import { Button } from '@material-ui/core';
 
 export default function Member({member}){
     const {updateState} = useMembers();
@@ -11,7 +12,7 @@ export default function Member({member}){
         return(
             <tr className="member-row">
                 <td>{member.id} </td>
-                <td>{member.name} </td>
+                <td>{member.name}</td>
                 <td>
                     <span>
                         <input ref={updateInput} className="update-input" type="text" /> 
@@ -26,8 +27,8 @@ export default function Member({member}){
         return (
             <tr className="member-row">
               <td>{member.id} </td>
-              <td>{member.name} </td>
-              <button className="update-btn" onClick={()=>{changeForm(member.id);}}>수정</button>
+              <td className="member-content">{member.name} </td>
+              <td ><button className="update-btn" onClick={()=>{changeForm(member.id);}}> 수정</button></td>
               <td><button className="remove-btn" onClick={()=>{onRemove(member.id);}}>X</button></td>
             </tr>
         );

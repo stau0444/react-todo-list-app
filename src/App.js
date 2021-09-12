@@ -3,19 +3,32 @@
 //함수로 정의된 컴포넌트에서는 따로 import React를 선언하지 않아도 된다.
 
 import "./App.scss";
+import "./Notification.css";
 import Wrapper from "./components/Wrapper";
-import MemberList from "./components/MemberList/MemberList";
 import TodoStateProvider from "./providers/TodoStateProvider";
+import { BrowserRouter, Route } from "react-router-dom";
+import About from "./pages/About";
+import Home from "./pages/Home";
+import Links from "./components/Links";
+import LoginForm from "./components/MemberList/LoginForm";
+import Date from "./pages/Date";
+import Notification from "./components/Notification";
 
 function App() {
   return (
-    <div className="App">
-      <Wrapper>
+    <BrowserRouter>
+      <div className="App">
         <TodoStateProvider>
-          <MemberList />
+          <Wrapper>
+            <LoginForm />
+            <Links />
+            <Route path="/" exact component={Home} />
+            <Route path="/date" exact component={Date} />
+            <Route path="/about" component={About} />
+          </Wrapper>
         </TodoStateProvider>
-      </Wrapper>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import useActions from '../../hooks/useActions';
 import useMembers from '../../hooks/useMembers';
 export default function CreateMember(){
@@ -6,7 +7,7 @@ export default function CreateMember(){
     return(
         <div>
             <input className="member-nameInput" ref={nameInput} type="text" placeholder="할 일"/>
-            <button className="member-nameButton" onClick={onSubmit}>추가</button>
+            <Button className="member-nameButton" onClick={onSubmit}>추가</Button>
         </div>
     );
 }

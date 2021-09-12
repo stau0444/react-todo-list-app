@@ -1,20 +1,28 @@
 import {useState,useRef,useMemo,useEffect} from 'react';
 import TodoStateContext from '../contexts/TodoStateContext';
+import Notification from '../components/Notification';
 
 const TodoStateProvider = ({children})=>{
+    
+    /*
+        Member 관련로직
+    */
+    
+    useMemo(()=>{console.log('h2');},[]);
+
     const [members , setMembers] = useState([
         {id:0 , name:'ugo'},
         {id:1 , name:'hwang'},
         {id:2 , name:'kokaka'},
     ]);
-    
+    //로그인 여부 관리
+    const [isLogin , setIsLogin] = useState(false);
+
     //이름 수정 input toggle
     const [updateState ,setUpdateState] = useState([{id:0 , update : false}]);
 
     //현재 멤버수 관리 function
     const totalCount = () => {
-    console.log('count');
-    console.log(members.length);
     return members.length;
     };
 
@@ -61,16 +69,37 @@ const TodoStateProvider = ({children})=>{
         nameInput.current.value='';
         idCount.current++;
     };
+
+    /*
+        Notice 관련 로직
+    */
+    const noticies = [
+        {id:0,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+        {id:1,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+        {id:2,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+        {id:3,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+        {id:4,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+        {id:5,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+        {id:6,content:"오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다 . 유튜브를 보다 오늘은 마라탕을 먹었다 배부르지 않게 적당히 먹고 집에 돌아왔더니 졸음이 쏟아졌다"},
+    ];
+        
+    const [notifications , setNotifications] = useState(noticies);
+
     return<TodoStateContext.Provider
             value={{
                 members,
+                notifications,
                 updateState,
                 memberCount,
                 nameInput,
+                isLogin,
+                setNotifications,
                 onModify,
                 onRemove,
                 changeForm,
                 onSubmit,
+                setIsLogin
+                
             }}
             >
             {children}
